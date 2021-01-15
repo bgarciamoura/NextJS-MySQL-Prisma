@@ -1,0 +1,64 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model customer {
+  id               Int                @id @default(autoincrement())
+  cia              Int                @default(1)
+  equipe           Int?
+  setor            Int?
+  letra            String?
+  crm              Int?
+  uf_crm           String?
+  nome             String?
+  sexo             String?
+  esp1             String?
+  esp2             String?
+  classificacao    String?
+  potencial        String?
+  dtnasc           DateTime?
+  nomesecre        String?
+  dtnascsec        DateTime?
+  email            String?
+  obsrep           String?
+  frequencia       String?
+  cpf              String?
+  customer_address customer_address[]
+}
+
+model customer_address {
+  id          Int       @id @default(autoincrement())
+  tp_lograd   String?
+  lograd      String?
+  numero      String?
+  compl       String?
+  cep         Int?
+  bairro      String?
+  uf          String?
+  ddd         Int?
+  telef1      Int?
+  ramal1      Int?
+  telef2      Int?
+  ramal2      Int?
+  telef3      Int?
+  ramal3      Int?
+  fax         Int?
+  ramal_fax   Int?
+  celular     Int?
+  customer_id Int?
+  customer    customer? @relation(fields: [customer_id], references: [id])
+
+  @@index([customer_id], name: "customer_address_FK")
+}
+
+model post {
+  id   Int      @id @default(autoincrement())
+  post String?
+  data DateTime?
+  author String?
+}
